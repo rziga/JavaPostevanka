@@ -36,7 +36,7 @@ public class Linear extends Module{
     @Override
     public Matrix[] backward(Matrix[] partials) {
         if (bias) {
-            b.grad = b.grad.add(partials[0].rowSum());
+            b.grad = b.grad.add(partials[0].colSum());
         }
         partials = mm.backward(partials);
         W.grad = W.grad.add(partials[1]);

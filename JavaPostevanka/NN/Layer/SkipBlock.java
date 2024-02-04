@@ -26,7 +26,13 @@ public class SkipBlock extends Module {
     }
 
     @Override
+    public Module[] subModules() {
+        return new Module[] {subBlock};
+    }
+
+    @Override
     public void clearContext() {
         subBlock.clearContext();
     }
+
 }

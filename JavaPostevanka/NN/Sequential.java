@@ -1,4 +1,5 @@
 package JavaPostevanka.NN;
+
 import JavaPostevanka.Matrix.Matrix;
 
 public class Sequential extends Module{
@@ -26,6 +27,11 @@ public class Sequential extends Module{
             out = m.backward(out);
         }
         return out;
+    }
+
+    @Override
+    public Module[] subModules() {
+        return modules;
     }
 
     @Override

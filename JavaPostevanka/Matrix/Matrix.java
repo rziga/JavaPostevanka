@@ -59,7 +59,7 @@ public class Matrix {
         float[][] buffer = new float[rows][cols];
         for (int i = 0; i < buffer.length; i++) {
             for (int j = 0; j < buffer[0].length; j++) {
-                buffer[i][j] = rng.nextFloat();
+                buffer[i][j] = 0.01F * (rng.nextFloat() - 0.5F);
             }
         }
         return new Matrix(buffer);
@@ -293,7 +293,15 @@ public class Matrix {
     }
 
     public Matrix add(float other) {
-        return add(new Matrix(new float[][] {{other}}));
+        return applyUnary((x) -> x + other);
+    }
+
+    public Matrix sub(Matrix other) {
+        return applyBinary((x, y) -> x - y, other);
+    }
+
+    public Matrix sub(float other) {
+        return applyUnary((x) -> x - other);
     }
 
     public Matrix mul(Matrix other) {
@@ -312,8 +320,16 @@ public class Matrix {
         return div(new Matrix(new float[][] {{other}}));
     }
 
+    public Matrix reciprocal(float other) {
+        return applyUnary((x) -> 1 / x);
+    }
+
     public Matrix exp() {
         return applyUnary((x) -> (float) Math.exp((double) x));
+    }
+
+    public Matrix log() {
+        return applyUnary((x) -> (float) Math.log((double) x));
     }
 
     public float sum() {
@@ -334,6 +350,32 @@ public class Matrix {
 
     public Matrix colSum() {
         return this.T().rowSum().T();
+    }
+
+    public float max() {
+        float max = Float.MIN_NORMAL;
+        for (float d: data) {
+            if (d > max) {
+                max = d;
+            }
+        }
+        return max;
+    }
+
+    public Matrix rowMax() {
+        Matrix out = new Matrix(rows(), 1);
+        for (int i = 0; i < rows(); i++) {
+            out.set(i, 0, getRow(i).max());
+        }
+        return out;
+    }
+
+    public Matrix colMax() {
+        return this.T().rowMax().T();
+    }
+
+    public Matrix rowArgmax() {
+        return applyBinary((x, y) -> (x == y ? 1F : 0F), rowMax());
     }
 
     public float dot(Matrix other) {

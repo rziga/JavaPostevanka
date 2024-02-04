@@ -49,11 +49,11 @@ public class SelfAttentionHead extends Module {
 
         Matrix dQK = sm.backward(new Matrix[] {dS})[0];
         fillTriu(dQK, 0);
-        partials = mm1.backward(new Matrix[] {dQK});
+        partials = mm1.backward(new Matrix[] {dQK.div(d)});
 
         Matrix dQ = linQ.backward(new Matrix[] {partials[0]})[0];
-        Matrix dK = linQ.backward(new Matrix[] {partials[1].T()})[0];
-        dV = linQ.backward(new Matrix[] {dV})[0];
+        Matrix dK = linK.backward(new Matrix[] {partials[1].T()})[0];
+        dV = linV.backward(new Matrix[] {dV})[0];
 
         return new Matrix[] {dQ.add(dK).add(dV)};
     }
@@ -63,13 +63,20 @@ public class SelfAttentionHead extends Module {
         linQ.clearContext();
         linK.clearContext();
         linV.clearContext();
+        mm1.clearContext();
+        mm2.clearContext();
         sm.clearContext();
+    }
+
+    @Override
+    public Module[] subModules() {
+        return new Module[] {linQ, linK, linV, mm1, mm2, sm};
     }
 
     private static void fillTriu(Matrix m, float fill) {
         int d = m.rows();
-        for (int i = 1; i < d; i++) {
-            for (int j = i; j < d; j++) {
+        for (int i = 0; i < d - 1; i++) {
+            for (int j = i + 1; j < d; j++) {
                 m.set(i, j, fill);
             }
         }
