@@ -12,6 +12,6 @@ public class Parameter {
     }
 
     public void zeroGrad() {
-        grad.mul(0);
+        grad = grad.mul(0);
     }
 }

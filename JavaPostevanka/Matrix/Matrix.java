@@ -59,7 +59,7 @@ public class Matrix {
         float[][] buffer = new float[rows][cols];
         for (int i = 0; i < buffer.length; i++) {
             for (int j = 0; j < buffer[0].length; j++) {
-                buffer[i][j] = 0.01F * (rng.nextFloat() - 0.5F);
+                buffer[i][j] = (rng.nextFloat() - 0.5F);
             }
         }
         return new Matrix(buffer);
@@ -353,7 +353,7 @@ public class Matrix {
     }
 
     public float max() {
-        float max = Float.MIN_NORMAL;
+        float max = -Float.MAX_VALUE;
         for (float d: data) {
             if (d > max) {
                 max = d;

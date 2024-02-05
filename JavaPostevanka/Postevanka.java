@@ -25,31 +25,34 @@ import JavaPostevanka.NN.Layer.SelfAttentionHead;
 public class Postevanka {
     public static void main(String[] args) {
         Random rng = new Random(1337);
-
         
-        Matrix x = new Matrix(new float[][] {{1, 2}, {3, 4}, {5, 6}});
+        //Matrix x = new Matrix(new float[][] {{1, 2}, {3, 4}, {5, 6}});
         //Module module = new SoftMax(); // OK
         //Module module = new Linear(3, 2, true, rng); // OK
         //Module module = new SelfAttentionHead(2, 3, rng); // OK
         //Module module = new FFSkipBlock(2, 3); // OK
         //Module module = new ReLU(); // OK
         //Module module = new MultiHeadSelfAttention(2, 2, 3); // OK
-        Module module = new DecoderLayer(2, 2, 1, 1); // OK
-        module.checkGrad(new Matrix[] {x}, 1E-3F);
-        
+        //Module module = new DecoderLayer(2, 2, 1, 1); // OK
+        //Matrix y = new Matrix(new float[][] {{0, 1, 1, 0, 1}});
+        //Matrix pred = new Matrix(new float[][] {{0.5F, 0.5F}, {0.1F, 0.9F}, {0.4F, 0.6F}, {0.7F, 0.3F}, {0.8F, 0.2F}});
+        //Module module = new CategoricalCrossentropy();
+        //module.checkGrad(new Matrix[] {pred, y}, 1E-3F);
+        //module.checkGrad(new Matrix[] {x}, 1E-3F);
 
-        /*
-        MultiplicationDataset dataset = new MultiplicationDataset();
+        
+        MultiplicationDataset dataset = new MultiplicationDataset(rng);
         GPT model = new GPT(
             dataset.vocabSize(), 
-            1, 1, 4, 2, 8, rng);
+            3, 2, 8, 4, 16, rng);
+        //System.out.println(model.parameters()[0].data);
         SGD optim = new SGD(model.parameters(), 1E-3F);
         CategoricalCrossentropy loss = new CategoricalCrossentropy();
         Trainer trainer = new Trainer(model, loss, optim, dataset);
-        trainer.fit(100, 1000, true);
+        trainer.fit(50, 1000, true);
 
         System.out.println("h");
-        */
+        
 
         /*
         Matrix x = new Matrix(new float[][] {{1, 2, 3}, {4, 5, 6}});

@@ -34,7 +34,7 @@ public class MultiplicationDataset extends Dataset{
 
     @Override
     public int length() {
-        return 123;
+        return 1234;
     }
 
     public int vocabSize() {

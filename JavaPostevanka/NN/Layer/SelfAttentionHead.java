@@ -1,6 +1,7 @@
 package JavaPostevanka.NN.Layer;
 
 import java.util.Random;
+import java.lang.Math;
 
 import JavaPostevanka.Matrix.Matrix;
 import JavaPostevanka.NN.Module;
@@ -13,7 +14,7 @@ public class SelfAttentionHead extends Module {
     private MatMul mm1;
     private MatMul mm2;
     private SoftMax sm;
-    private int d;
+    private float d;
 
     public SelfAttentionHead(int inChan, int embedChan, Random rng) {
         this.linQ = new Linear(inChan, embedChan, false, rng);
@@ -22,7 +23,7 @@ public class SelfAttentionHead extends Module {
         this.mm1  = new MatMul();
         this.mm2  = new MatMul();
         this.sm = new SoftMax();
-        this.d = embedChan;
+        this.d = (float) Math.sqrt((double) embedChan);
     }
 
     public SelfAttentionHead(int inChan, int embedChan) {
@@ -36,7 +37,7 @@ public class SelfAttentionHead extends Module {
         Matrix V = linV.forward(inputs)[0];
 
         Matrix QK = mm1.forward(new Matrix[] {Q, K.T()})[0].div(d);
-        fillTriu(QK, -999999F);
+        fillTriu(QK, Float.NEGATIVE_INFINITY);
         Matrix S = sm.forward(new Matrix[] {QK})[0];
         return mm2.forward(new Matrix[] {S, V});
     }

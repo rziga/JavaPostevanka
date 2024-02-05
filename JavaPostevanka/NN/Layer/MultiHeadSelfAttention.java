@@ -15,7 +15,7 @@ public class MultiHeadSelfAttention extends Module{
         for (int i = 0; i < numHeads; i++) {
             this.heads[i] = new SelfAttentionHead(dModel, dHidden, rng);
         }
-        this.linOut = new Linear(numHeads * dHidden, dModel, false);
+        this.linOut = new Linear(numHeads * dHidden, dModel, false, rng);
     }
 
     public MultiHeadSelfAttention(int numHeads, int dModel, int dHidden) {

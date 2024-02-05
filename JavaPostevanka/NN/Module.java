@@ -29,6 +29,20 @@ public abstract class Module {
         return x.toArray(new Parameter[0]);
     }
 
+    public boolean detectAnomaly() {
+        for (Parameter p: parameters()) {
+            for (int i = 0; i < p.data.rows(); i++) {
+                for (int j = 0; j < p.data.cols(); j++) {
+                    if (Float.isNaN(p.data.get(i, j)) ||
+                     Float.isNaN(p.grad.get(i, j))) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public void checkGrad(Matrix[] inputs, float h) {
 
         // pass through module 1 time and record backwards
