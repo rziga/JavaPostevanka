@@ -2,7 +2,7 @@
 
 Moj prvi program v jeziku Java :D.
 
-Implementacija metode, opisane v Furst in sod. [1].
+Implementacija metode, opisane v Fürst in sod. [1].
 
 ## Namen
 
