@@ -374,8 +374,21 @@ public class Matrix {
         return this.T().rowMax().T();
     }
 
-    public Matrix rowArgmax() {
-        return applyBinary((x, y) -> (x == y ? 1F : 0F), rowMax());
+    public int[] rowArgMax() {
+        int[] out = new int[rows()];
+        Matrix maxes = rowMax();
+        for (int i = 0; i < rows(); i++) {
+            for (int j = 0; j < cols(); j++) {
+                if (this.get(i, j) == maxes.get(i, 0)) {
+                    out[i] = j;
+                }
+            }
+        }
+        return out;
+    }
+
+    public int[] colArgMax() {
+        return this.T().rowArgMax();
     }
 
     public float dot(Matrix other) {

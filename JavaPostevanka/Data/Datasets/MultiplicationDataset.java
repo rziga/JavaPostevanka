@@ -9,7 +9,7 @@ import JavaPostevanka.Data.Tokenizers.CharacterTokenizer;
 public class MultiplicationDataset extends Dataset{
     
     private Random rng;
-    private CharacterTokenizer tokenizer = new CharacterTokenizer(
+    public CharacterTokenizer tokenizer = new CharacterTokenizer(
         "0123456789*=".toCharArray()
         );
 
@@ -27,8 +27,8 @@ public class MultiplicationDataset extends Dataset{
         int num2 = rng.nextInt(10);
         String trainText = String.format("%d*%d=%02d", num1, num2, num1*num2);
         int l = trainText.length();
-        Matrix x = tokenizer.transform(trainText.substring(0, l-2));
-        Matrix y = tokenizer.transform(trainText.substring(1, l-1));
+        Matrix x = tokenizer.transform(trainText.substring(0, l-1));
+        Matrix y = tokenizer.transform(trainText.substring(1, l));
         return new Matrix[] {x, y};
     }
 

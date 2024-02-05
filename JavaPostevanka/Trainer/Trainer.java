@@ -19,11 +19,11 @@ public class Trainer {
         this.dataset = dataset;
     }
 
-    public void fit(int batchSize, int nEpochs, boolean verbose) {
-        for (int epoch = 1; epoch <= nEpochs; epoch++) {
+    public void fit(int batchSize, int maxEpochs, boolean verbose) {
+        for (int epoch = 1; epoch <= maxEpochs; epoch++) {
             float currentLoss = 0;
             if (verbose) {
-                System.out.printf("epoch: %d\n", epoch);
+                
             }
 
             for (int i = 1; i <= dataset.length(); i++) {
@@ -42,8 +42,14 @@ public class Trainer {
                 
             }
 
+            // TODO: remove if needed
+            if (currentLoss < 0.5) {
+                return;
+            }
+
             if (verbose) {
-                System.out.printf("%.10f\n", currentLoss);
+                System.out.printf("epoch: %4d, ", epoch);
+                System.out.printf("loss %.3f\n", currentLoss);
                 currentLoss = 0;
             }
 
