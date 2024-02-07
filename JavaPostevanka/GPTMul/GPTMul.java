@@ -15,7 +15,7 @@ public class GPTMul {
     }
 
     public int mul(int a, int b) {
-        String prompt1 = String.format("%d*%d=0", a, b);
+        String prompt1 = String.format("%d*%d=", a, b);
         Matrix input1 = tokenizer.transform(prompt1);
         Matrix output1 = model.forward(new Matrix[] {input1})[0];
         int new_token1 = output1.rowArgMax()[3];
@@ -29,6 +29,5 @@ public class GPTMul {
         String out = tokenizer.transformInverse(pred);
         return Integer.parseInt(out);
     }
-
-
+    
 }

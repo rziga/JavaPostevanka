@@ -309,15 +309,15 @@ public class Matrix {
     }
 
     public Matrix mul(float other) {
-        return mul(new Matrix(new float[][] {{other}}));
+        return applyUnary((x) -> x * other);
     }
 
     public Matrix div(Matrix other) {
-        return applyBinary((x, y) -> x/y, other);
+        return applyBinary((x, y) -> x / y, other);
     }
 
     public Matrix div(float other) {
-        return div(new Matrix(new float[][] {{other}}));
+        return applyUnary((x) -> x / other);
     }
 
     public Matrix reciprocal(float other) {

@@ -10,6 +10,7 @@ import JavaPostevanka.NN.Optim.SGD;
 import JavaPostevanka.Trainer.Trainer;
 
 public class Postevanka {
+    
     public static void main(String[] args) {
         Random rng = new Random(1337);
         

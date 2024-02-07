@@ -18,4 +18,5 @@ public class SGD extends Optimizer {
             p.data = p.data.sub(p.grad.mul(lr));
         }
     }
+    
 }

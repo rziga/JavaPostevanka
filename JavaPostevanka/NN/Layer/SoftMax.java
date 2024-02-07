@@ -10,7 +10,7 @@ public class SoftMax extends Module {
     @Override
     public Matrix[] forward(Matrix[] inputs) {
         Matrix X = inputs[0];
-        Matrix expX = (X.add(X.rowMax().mul(-1))).exp();
+        Matrix expX = X.sub(X.rowMax()).exp();
         activation = expX.div(expX.rowSum());
         return new Matrix[] {activation};
     }
